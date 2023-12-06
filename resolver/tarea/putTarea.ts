@@ -1,28 +1,30 @@
 import { Request, Response} from "express";
 import { tareaModel, tareaModelType } from "../../db/dbTarea.ts";
 import { Estados } from "../../types.ts";
-export const cambiarStatus = async(req: Request<{id: string}>, res:Response<tareaModelType | {errror: unknown}>) => {
-    const id = req.params
-    const estado = req.querry.status;
+export const cambiarStatus = async(req: Request<{id: string}>, res:Response<string | {errror: unknown}>) => {
     try{
-        const tarea = await tareaModel.find(id);
+        const id = req.params.id;
+        const status = req.querry.status
+
+        const tarea = await tareaModel.findById(id).exec();
         let tareaActualizada;
         if(!tarea){
             throw new Error("Task not found")
         }
 
-        if(estado != Estados.Closed){
-            tareaActualizada = await tareaModel.findByIdAndUpdate( {id}, 
-                                                {estado: estado},
-                                                {new: true})
-            if(!tareaActualizada){           
-                throw new Error("Fallo el update de la tarea")
-            }else{
-                req.status(200).send(tareaActualizada)
-            }
-        }else{
+        if(status == Estados.Closed){
             tareaActualizada = await tareaModel.findByIdAndDelete({id})
             req.status(200).send("Tarea en Close, se ha eliminado")
+        }
+        
+        tareaActualizada = await tareaModel.findByIdAndUpdate( {id}, 
+                                            {estado: status},
+                                            {new: true})
+        if(!tareaActualizada){    
+            console.log("B")       
+            throw new Error("Fallo el update de la tarea")
+        }else{
+            req.status(200).send(tareaActualizada)
         }
     }catch(error){
         res.status(500).send(error)

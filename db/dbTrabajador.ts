@@ -53,7 +53,7 @@ trabajadorSchema
         if(tareasID.length > 10){
             throw new Error("El trabajador tiene mas de 10 tareas")
         }else{
-            return true
+            return true 
         }
     })
 

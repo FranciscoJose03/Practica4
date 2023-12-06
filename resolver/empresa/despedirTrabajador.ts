@@ -3,21 +3,22 @@ import { empresaModel } from "../../db/dbEmpresa.ts";
 import { trabajadorModel } from "../../db/dbTrabajador.ts";
 
 export const despedirTrabajador = async(req: Request, res: Response) => {
-    const id = req.params.id
-    const workwerId = req.params.workwerId
-
     try{
-        const empresa = await empresaModel.findById(id)
+        const id = req.params.id
+        const workwerId = req.params.workwerId
+    
+        const empresa = await empresaModel.findById(id).exec()
+
         if(!empresa){
             throw new Error("Empresa not found")
         }
 
-        const trabajador = await trabajadorModel.findById(workwerId)
+        const trabajador = await trabajadorModel.findById(workwerId).exec()
         if(!trabajador){
             throw new Error("Trabajador not found")
         }
 
-        if(trabajador.empresaID == null){
+        if(trabajador.empresaID === null){
             throw new Error("Trabajador no tiene empresa")
         }
 
@@ -25,7 +26,7 @@ export const despedirTrabajador = async(req: Request, res: Response) => {
                                                 {$set: {empresaID: null}},
                                                 {new: true})
 
-        res.status(200).send(trabajador)
+        res.status(200).send("Se ha despedido al cliente de la empresa")
     }catch(error){
         res.status(500).send(error)
     }
