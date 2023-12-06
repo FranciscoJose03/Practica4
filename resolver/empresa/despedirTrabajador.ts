@@ -10,16 +10,16 @@ export const despedirTrabajador = async(req: Request, res: Response) => {
         const empresa = await empresaModel.findById(id).exec()
 
         if(!empresa){
-            throw new Error("Empresa not found")
+            res.status(500).send({error:"Empresa not found"})
         }
 
         const trabajador = await trabajadorModel.findById(workwerId).exec()
         if(!trabajador){
-            throw new Error("Trabajador not found")
-        }
-
-        if(trabajador.empresaID === null){
-            throw new Error("Trabajador no tiene empresa")
+            res.status(500).send({error:"Trabajador not found"})
+        }else{
+            if(trabajador.empresaID === null){
+                res.status(500).send({error:"Trabajador no tiene empresa"})
+            }
         }
 
         await trabajadorModel.findByIdAndUpdate({_id: workwerId},

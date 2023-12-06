@@ -6,7 +6,7 @@ export const deleteEmpresa = async(req: Request<{id: string}>, res: Response<emp
     try{
         const trabajador = await empresaModel.findByIdAndDelete(id);
         if(!trabajador){
-            res.status(404).send({error: "Tarea not found"});
+            res.status(500).send({error: "Tarea not found"});
             return;
         }
 

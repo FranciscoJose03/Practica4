@@ -9,7 +9,7 @@ export const cambiarStatus = async(req: Request<{id: string}>, res:Response<stri
         const tarea = await tareaModel.findById(id).exec();
         let tareaActualizada;
         if(!tarea){
-            throw new Error("Task not found")
+            res.status(500).send({error:"Task not found"})
         }
 
         if(status == Estados.Closed){
@@ -21,8 +21,7 @@ export const cambiarStatus = async(req: Request<{id: string}>, res:Response<stri
                                             {estado: status},
                                             {new: true})
         if(!tareaActualizada){    
-            console.log("B")       
-            throw new Error("Fallo el update de la tarea")
+            res.status(500).send({error: "Fallo el update de la tarea"})
         }else{
             req.status(200).send(tareaActualizada)
         }

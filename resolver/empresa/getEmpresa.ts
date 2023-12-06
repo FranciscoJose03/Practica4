@@ -6,7 +6,7 @@ export const getEmpresa =async(req: Request<{id: string}>, res: Response<empresa
         const id = req.params.id;
         const empresa = await empresaModel.findById(id).exec();
         if(!empresa){
-            res.status(404).send({error: "Empresa not found"})
+            res.status(500).send({error: "Empresa not found"})
             return;
         }
         res.status(200).send(empresa);
