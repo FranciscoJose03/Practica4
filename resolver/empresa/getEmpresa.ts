@@ -2,9 +2,9 @@ import { Request, Response} from "express";
 import { empresaModel, empresaModelType } from "../../db/dbEmpresa.ts";
 
 export const getEmpresa =async(req: Request<{id: string}>, res: Response<empresaModelType | {error: unknown} >) => {
-    const id = req.params.id;
     try{
-        const empresa = await empresaModel.findById(id);
+        const id = req.params.id;
+        const empresa = await empresaModel.findById(id).exec();
         if(!empresa){
             res.status(404).send({error: "Empresa not found"})
             return;

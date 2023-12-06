@@ -1,17 +1,18 @@
 import { Request, Response} from "express";
-import { empresaModel } from "../../db/dbEmpresa.ts";
+import { empresaModel, empresaModelType } from "../../db/dbEmpresa.ts";
 import { trabajadorModel } from "../../db/dbTrabajador.ts";
 
-export const contratarTrabajador = async(req: Request, res: Response) => {
-    const id = req.params.id
-    const workwerId = req.params.workwerId
+export const contratarTrabajador = async(req: Request <{id: string, workerId: string}>, res: Response< empresaModelType| {error:unknown}>) => {
     try{
-        const empresa = await empresaModel.findById(id)
+        const id = req.params.id;
+        const workwerId = req.params.workwerId;
+
+        const empresa = await empresaModel.findById(id).exec()
         if(!empresa){
             throw new Error("Empresa not found")
         }
 
-        const trabajador = await trabajadorModel.findById(workwerId)
+        const trabajador = await trabajadorModel.findById(workwerId).exec();
         if(!trabajador){
             throw new Error("Trabajador not found")
         }
