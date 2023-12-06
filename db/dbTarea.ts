@@ -44,8 +44,7 @@ tareaSchema
 tareaSchema
     .post("save", async(tarea: tareaModelType) => {
         await trabajadorModel.findByIdAndUpdate(tarea.trabajadorID,
-                                                {$push: {tareas: tarea._id}},
-                                                {new: true})
+                                                {$push: {tareas: tarea._id}})
     })
 
 tareaSchema
