@@ -6,7 +6,7 @@ export const getTrabajador = async(req: Request<{id: string}>, res: Response<tra
         const id = req.params.id;
         const trabajador = await trabajadorModel.findById(id).exec();
         if(!trabajador){
-            res.status(404).send({error: "Trabajador not found"});
+            res.status(500).send({error: "Trabajador not found"});
             return;
         }
         res.status(200).send(trabajador);

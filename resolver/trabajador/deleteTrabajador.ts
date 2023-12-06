@@ -6,7 +6,7 @@ export const deleteTrabajador = async(req: Request<{id: string}>, res: Response<
     try{
         const trabajador = await trabajadorModel.findByIdAndDelete(id);
         if(!trabajador){
-            res.status(404).send({error: "Trabajador not found"});
+            res.status(500).send({error: "Trabajador not found"});
             return;
         }
 

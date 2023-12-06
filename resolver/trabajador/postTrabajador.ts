@@ -6,14 +6,12 @@ export const postTrabajador = async(req: Request<trabajadorModelType>, res:Respo
         const {name, DNI, email, telefono } = req.body
 
         if(!name || !DNI || !email || !telefono){
-            console.log("A")
-            throw new Error("All elements are required");
+            res.status(500).send({error: "All elements are required"});
         }
 
         const alreadyexist = await  trabajadorModel.findOne({DNI:DNI})
         if(alreadyexist){
-            console.log("B")
-            throw new Error("Worker has been created before");
+            res.status(500).send({error: "Worker has been created before"});
         }
 
         const trabajador = new trabajadorModel({name, DNI, email, telefono})
