@@ -7,15 +7,21 @@ export const postTarea = async(req: Request<tareaModelType>, res:Response<tareaM
     try{
         const {nombre, estado, duracion, empresaID, trabajadorID} = req.body
         if(!nombre || !estado || !duracion || !empresaID || !trabajadorID){
+            console.log("C")
             throw new Error("All elements are required");
         }
 
-        const trabajadorexist = await trabajadorModel.findById(trabajadorID)
-        if(!trabajadorexist) throw new Error("Worker not found");
+        const trabajadorexist = await trabajadorModel.findOne({_id: trabajadorID})
+        if(!trabajadorexist) {
+            throw new Error("Worker not found");
+        }
 
-        const empresaexist = await empresaModel.findById(empresaID)
-        if(!empresaexist) throw new Error("Business not found");
+        const empresaexist = await empresaModel.findOne({_id: empresaID})
+        if(!empresaexist){
+            throw new Error("Business not found");
+        }
 
+        
         const tarea = new tareaModel({nombre, estado, duracion, empresaID, trabajadorID})
         await tarea.save();
 

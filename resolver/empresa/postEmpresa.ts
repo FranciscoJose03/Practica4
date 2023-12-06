@@ -8,7 +8,7 @@ export const postEmpresa = async(req: Request<empresaModelType>, res:Response<em
             throw new Error("Name or type are required");
         }
 
-        const alreadyexist = await empresaModel.find({name: name})
+        const alreadyexist = await empresaModel.findOne({name: name})
 
         if(alreadyexist){
             throw new Error("The business have the same name than otherone")

@@ -29,7 +29,7 @@ trabajadorSchema
 trabajadorSchema
     .path("email")
     .validate((email: string) => {
-        if(/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/.test(email)){
+        if(/^[a-z]{1,64}@(?:[a-z0-9-]{1,63}\.){1,125}[a-z]{2,63}$/.test(email)){
             return email;
         }else{ 
             throw new Error("El email da error")

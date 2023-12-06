@@ -1,4 +1,3 @@
-// @deno-types="npm:@types/express@4"
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 
@@ -45,7 +44,7 @@ try{
 
     .post("/worker", postTrabajador)
     .post("/business", postEmpresa)
-    .post("task", postTarea)
+    .post("/task", postTarea)
 
     .put("/business/:id/fire/:workwerId", despedirTrabajador)
     .put("/business/:id/hire/:workwerId", contratarTrabajador)
