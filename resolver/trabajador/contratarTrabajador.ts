@@ -26,6 +26,9 @@ export const contratarTrabajador = async(req: Request <{id: string, workerId: st
                                             {$push: {trabajadoresID: workwerId}},
                                             {new: true})
         
+        await trabajadorModel.findOneAndUpdate({_id: workwerId},
+                                            {$push: {empresaID: id}},
+                                            {new: true})
         res.status(200).send("Has contratado al cliente")                                            
 
     }catch(error){
