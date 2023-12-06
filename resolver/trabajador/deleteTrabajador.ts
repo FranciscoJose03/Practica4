@@ -2,7 +2,7 @@ import { Request, Response} from "express";
 import { trabajadorModel, trabajadorModelType } from "../../db/dbTrabajador.ts";
 
 export const deleteTrabajador = async(req: Request<{id: string}>, res: Response<trabajadorModelType | {error: unknown} >) => {
-    const id = req.params._id;
+    const id = req.params.id;
     try{
         const trabajador = await trabajadorModel.findByIdAndDelete(id);
         if(!trabajador){
