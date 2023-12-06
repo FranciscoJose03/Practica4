@@ -2,7 +2,7 @@ import { Request, Response} from "express";
 import { tareaModel, tareaModelType } from "../../db/dbTarea.ts";
 
 export const getTarea =async(req: Request<{id: string}>, res: Response<tareaModelType | {error: unknown} >) => {
-    const id = req.params._id;
+    const id = req.params.id;
     try{
         const tarea = await tareaModel.findById(id);
         if(!tarea){
