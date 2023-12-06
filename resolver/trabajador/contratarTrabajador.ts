@@ -22,7 +22,7 @@ export const contratarTrabajador = async(req: Request <{id: string, workerId: st
             }
         }
 
-        await empresaModel.findOneAndUpdate({id},
+        await empresaModel.findOneAndUpdate({_id: id},
                                             {$push: {trabajadoresID: workwerId}},
                                             {new: true})
         
